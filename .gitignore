@@ -1,0 +1,22 @@
+# PyInstaller
+build/
+dist/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# Logs
+logs/
+*.log
+
+# Data files (manifests & processed results)
+*.xls
+*.xlsx
+
+# Local user configurations
+app_config.json
