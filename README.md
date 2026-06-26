@@ -20,8 +20,8 @@
 ```
 VIMC/
 ├── vimc_app.py           # 🚀 Entry point - Chạy file này
-├── app_config.json       # Cấu hình ứng dụng (tự tạo)
-├── config.ini            # Cấu hình xử lý
+├── VIMC_Manifest.spec    # 📦 Cấu hình đóng gói PyInstaller
+├── app_config.json       # Cấu hình ứng dụng cục bộ (tự tạo)
 ├── strings_vi.ini        # Ngôn ngữ Tiếng Việt
 ├── strings_en.ini        # Ngôn ngữ English
 ├── config/               # Module cấu hình
@@ -54,7 +54,7 @@ python vimc_app.py
 
 ```bash
 pip install pyinstaller
-pyinstaller vimc_app.py --onefile --windowed --name "VIMC_Manifest_Cleaner" --icon=icon.ico
+pyinstaller VIMC_Manifest.spec --clean -y
 ```
 
 ## ⌨️ Phím tắt
@@ -102,7 +102,7 @@ Xử lý tốt manifest chứa **hỗn hợp** nhiều định dạng trong cùn
 | Consignee | Người nhận |
 | Notify | Thông báo |
 | Hãng khai thác | SOC/COC |
-| Loại hàng | GENERAL/REEFER/TANK... |
+| Loại hàng | GENERAL/REEFER... |
 
 ## 🧪 Chạy tests
 
@@ -112,6 +112,12 @@ python -m pytest tests/test_vimc_modules.py -v
 ```
 
 ## 📝 Changelog
+
+### v3.1.0 (Jun 2026)
+- 🎨 **Giao diện phẳng & tương phản cao**: Nâng cấp nút bấm sang dạng phẳng (Flat), tối ưu hóa màu sắc thương hiệu VIMC (Navy, Emerald Green, Slate) giúp cải thiện độ tương phản và trực quan hơn.
+- ⚙️ **Ánh xạ loại hàng (Tank → General)**: Điều chỉnh cấu hình loại hàng cho vỏ tank (`20TK`, `40TK`, `22T1`, `42T1`) luôn là `GENERAL` (hoặc `EMPTY` nếu container rỗng).
+- 🔧 **Sửa lỗi AttributeError**: Sửa lỗi crash khi nạp file do thiếu hàm hiển thị loại tàu `_update_ship_type_display` và nhãn UI tương ứng.
+- 📦 **Đóng gói PyInstaller hoàn thiện**: Tự động nhúng file ngôn ngữ vào file `.exe` (`sys._MEIPASS`) và sửa lỗi ghi cấu hình/logs cục bộ.
 
 ### v3.0.0 (Jan 2026)
 - ✨ **Dual format support**: Hỗ trợ cả Hải Phòng và Đà Nẵng trong cùng 1 file
@@ -137,10 +143,10 @@ python -m pytest tests/test_vimc_modules.py -v
 ## 📋 Requirements
 
 ```
-pandas>=1.5.0
-openpyxl>=3.0.0
-xlsxwriter>=3.0.0
-xlrd>=2.0.0
+pandas>=2.0.0
+openpyxl>=3.1.0
+tkinterdnd2>=0.3.0
+pytest>=7.0.0
 ```
 
 ## 👤 Tác giả
