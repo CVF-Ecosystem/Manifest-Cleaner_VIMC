@@ -137,8 +137,16 @@ class VimcExcelHandler:
         self.ship_type = detect_ship_type(file_path)
         logger.info(f"Detected ship type: {self.ship_type.value}")
         
-        # Determine engine
-        engine = 'openpyxl' if path.suffix.lower() == '.xlsx' else 'xlrd'
+        # Determine engine based on actual file content (magic bytes),
+        # not just extension - some .xls files are actually XLSX format
+        try:
+            with open(file_path, 'rb') as _f:
+                _magic = _f.read(4)
+            is_xlsx_format = (_magic == b'PK\x03\x04')  # ZIP/XLSX signature
+        except Exception:
+            is_xlsx_format = path.suffix.lower() in ('.xlsx', '.xlsm')
+        engine = 'openpyxl' if is_xlsx_format else 'xlrd'
+        logger.info(f"Detected {'XLSX' if is_xlsx_format else 'XLS'} format for: {path.name}")
         
         # Read peek rows to find header
         peek_rows = 20
